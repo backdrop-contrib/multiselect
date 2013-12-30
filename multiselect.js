@@ -45,7 +45,7 @@
         selclass = '.' + this.id + '_sel';
         $(selclass).moveSelectionTo($(unselclass));
       });
-      if (Drupal.settings.multiselect.widths != '') {
+      if (typeof Drupal.settings.multiselect !== 'undefined' && Drupal.settings.multiselect.widths != '') {
         var widths = Drupal.settings.multiselect.widths + 'px';
         var label_change_px = Drupal.settings.multiselect.widths - 95; // How much right margin?
         var label_container_change_px = 2 * Drupal.settings.multiselect.widths + 75; // How wide should the label container box be?
