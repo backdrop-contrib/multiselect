@@ -166,10 +166,21 @@ function multiselect_field_widget_form(&$form, &$form_state, $field, $instance, 
 function _multiselect_after_build($element, $form_state) {
   $value_key = $element['#columns'][0];
   $items = array();
-
   if (isset($form_state['values'][$element['#field_name']][LANGUAGE_NONE])) {
     foreach ($form_state['values'][$element['#field_name']][LANGUAGE_NONE] as $nid) {
       $items[] = array($value_key => $nid);
+    }
+  }
+  else if (module_exists('field_collection')) {
+    $field_info = field_info_field($element['#field_name']);
+    $bundle = $field_info['bundles']['field_collection_item'][0];
+    foreach ($form_state['values'][$bundle][LANGUAGE_NONE] as $field) {
+      $field_name = $element['#field_name'];
+      if (isset($field[$field_name])) {
+        foreach ($field[$field_name][LANGUAGE_NONE] as $nid) {
+          $items[] = array($value_key => $nid);
+        }
+      }
     }
   }
 

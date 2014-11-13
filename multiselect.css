@@ -17,6 +17,10 @@ select.multiselect_sel {
 	float: right;
 	margin-right: 145px;
 }
+td .multiselect_labels .label_selected { /* Fix for field collection display */
+  float: none;
+  padding-left: 300px;
+}
 /* FIELDS */
 .multiselect_available {
 	float: left;
