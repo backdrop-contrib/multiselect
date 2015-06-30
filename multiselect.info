@@ -1,6 +1,6 @@
 name = Multiselect
-description = Defines a CCK multiple selection field widget, to allow easier multi-selection for users.
-package = CCK
+description = Defines a multiple selection field widget, to allow easier multi-selection for users.
+package = Fields
 core = "7.x"
 version = VERSION
 
