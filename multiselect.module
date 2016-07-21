@@ -268,7 +268,7 @@ function _multiselect_build_widget_code($options, $items, $element, $required = 
       elseif (isset($value['target_id'])) { // Handle Entity Reference.
         $selected_options[$value['target_id']] = $value['target_id'];
       }
-      elseif (isset($value[$options])) { // With FAPI, it's not.
+      elseif (isset($options[$value])) { // With FAPI, it's not.
         $selected_options[$value] = $options[$value];
       }
     }
