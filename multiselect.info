@@ -1,7 +1,8 @@
+type = module
 name = Multiselect
 description = Defines a multiple selection field widget, to allow easier multi-selection for users.
-package = Fields
-core = "7.x"
+package = User Interface
+backdrop = 1.x
 version = VERSION
+version = "1.x-1.1"
 
-files[] = multiselect.module

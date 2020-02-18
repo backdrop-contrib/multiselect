@@ -1,5 +1,13 @@
 <?php
 
+function multiselect_fapi_example_config_info() {
+  $prefixes['multiselect_fapi_example.settings'] = array(
+    'label' => t('Settings for multiselect_fapi_example'),
+    'group' => t('multiselect_fapi_example'),
+  );
+  return $prefixes;
+}
+
 /**
  * Implements hook_menu() to set up the URLs (menu entries) for the
  * form examples.
@@ -8,7 +16,7 @@ function multiselect_fapi_example_menu() {
   $items = array();
   $items['multiselect_fapi_example'] = array(
     'title' => 'Form API Example of Multiselect Widget',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('multiselect_fapi_example_display'),
     'access callback' => TRUE,
     'description' => 'Simple form with a multiselect widget and a submit button. Saves to the variables table.',
@@ -21,6 +29,8 @@ function multiselect_fapi_example_menu() {
  * Implementation of FAPI form.
  */
 function multiselect_fapi_example_display($form, &$form_state) {
+  $config = config('multiselect_fapi_example.settings');
+
   $form = array();
   $form['description'] = array(
     '#type' => 'item',
@@ -51,7 +61,18 @@ function multiselect_fapi_example_display($form, &$form_state) {
     '#size' => 15,
     '#required' => TRUE,
   );
-  $form = system_settings_form($form);
+     $module_path = backdrop_get_path('module', 'multiselect');
+   $form['#attached'] = array(
+     'css' => array($module_path . '/multiselect.css'),
+     'js' => array($module_path . '/multiselect.js'),
+   );
+
+  // Add a submit button
+  $form['actions']['#type'] = 'actions';
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save configuration'),
+  );
   return $form;
 }
 
@@ -60,5 +81,15 @@ function multiselect_fapi_example_display($form, &$form_state) {
  * Will return default values if nothing has yet been stored.
  */
 function _multiselect_fapi_example_options() {
-  return variable_get('multiselector', array('fulltext', 'title', '4', '8'));
+  return  config_get('multiselect_fapi_example.settings','multiselector');
 }
+
+
+function multiselect_fapi_example_display_submit($form, &$form_state) {
+  $config = config('multiselect_fapi_example.settings');
+  $config->set('multiselector', $form_state['values']['multiselector']);
+  $config->save();
+  backdrop_set_message(t('The configuration options have been saved.'));
+}
+
+

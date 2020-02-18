@@ -1,0 +1,4 @@
+{
+  "_config_name": "multiselect_fapi_example.settings",
+  "multiselector": ["fulltext", "title", "4", "8"]
+}

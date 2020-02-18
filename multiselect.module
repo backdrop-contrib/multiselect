@@ -13,12 +13,12 @@ function multiselect_help($path, $arg) {
   $output = '';
   switch ($path) {
     case 'admin/help#multiselect':
-      $output = '<p>' . t('Provides a CCK and Form API widget for editing fields that allows users to select from a list of options in a left box and have them visually moved into the right box when options are chosen.') . '</p>';
+      $output = '<p>' . t('Provides a Form API widget for editing fields that allows users to select from a list of options in a left box and have them visually moved into the right box when options are chosen.') . '</p>';
       $output .= '<h2>' . t('Methods of Implementing a Multiselect Widget') . '</h2>';
-      $output .= '<h3>' . t('Method 1: Using CCK') . '</h3>';
+      $output .= '<h3>' . t('Method 1: Using Fields on any entity') . '</h3>';
       $output .= '<p>' . t('When creating a new content field, select "Multiselect" as your widget type. You can use Multiselect on fields of type "list", "list_text", "list_number", "node_reference", "taxonomy_term_reference", and "user_reference".') . '</p>';
       $output .= '<h3>' . t('Method 2: Coding Your Own Module') . '</h3>';
-      $output .= '<p>' . t('If you\'re developing a custom module and wish to use the Multiselect widget in place of a traditional "select" widget, you may use the Drupal 7 Form API. Included with the module is an example module called "multiselect_fapi_example" that creates a simple form on a page that stores the selected options in the Drupal "variables" table. The page is made available at the path: /multiselect_fapi_example.') . '</p>';
+      $output .= '<p>' . t('If you\'re developing a custom module and wish to use the Multiselect widget in place of a traditional "select" widget, you may use the Backdrop Form API. Included with the module is an example module called "multiselect_fapi_example" that creates a simple form on a page that stores the selected options in the backdrop "variables" table. The page is made available at the path: /multiselect_fapi_example.') . '</p>';
       break;
   }
   return $output;
@@ -31,7 +31,7 @@ function multiselect_menu() {
   $items['admin/config/content/multiselect'] = array(
     'title' => t('Multiselect'),
     'description' => t('Configure how multiselect fields are displayed to content editors.'),
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('multiselect_settings'),
     'file' => 'multiselect.admin.inc',
     'access arguments' => array('administer site configuration'),
@@ -44,9 +44,9 @@ function multiselect_menu() {
  * Implements hook_init().
  */
 function multiselect_init() {
-  $multiselect_widths = variable_get('multiselect_widths');
+  $multiselect_widths = config_get('multiselect.settings', 'multiselect_widths');
   if (!empty($multiselect_widths)) {
-    drupal_add_js(array('multiselect' => array('widths' => $multiselect_widths)), 'setting');
+    backdrop_add_js(array('multiselect' => array('widths' => $multiselect_widths)), 'setting');
   }
 }
 
@@ -64,15 +64,14 @@ function multiselect_form_alter(&$form, &$form_state, $form_id) {
 
         if (in_array($widget_type, array('multiselect'))) {
           if (in_array($field_type, array('list', 'list_number', 'list_text', 'taxonomy_term_reference'))) {
-            // CCK user_reference and node_reference fields don't need allowed values list.
+            // User_reference and node_reference fields don't need allowed values list.
             // For other field types, if no 'allowed values' were set yet, add a reminder message.
-            if (empty($form['field']['settings']['allowed_values']['#default_value'])) {
-              drupal_set_message(t("You need to specify the 'allowed values' for this field."), 'warning');
+            if (empty($form['field']['settings']['allowed_values']['#field']['settings']['allowed_values'])) {
+              backdrop_set_message(t("You need to specify the 'allowed values' for this field."), 'warning');
             }
           }
         }
       }
-      break;
   }
 }
 
@@ -151,7 +150,7 @@ function multiselect_field_widget_form(&$form, &$form_state, $field, $instance, 
   );
 
    // Attach CSS and Javascript for this widget.
-   $module_path = drupal_get_path('module', 'multiselect');
+   $module_path = backdrop_get_path('module', 'multiselect');
    $element['#attached'] = array(
      'css' => array($module_path . '/multiselect.css'),
      'js' => array($module_path . '/multiselect.js'),
@@ -326,7 +325,7 @@ function _multiselect_build_widget_code($options, $items, $element, $required = 
 
 // ! FAPI Section
 /**
- * FAPI section. Add as a new FAPI element. TODO!!!Looking at form.inc and http://drupal.org/node/169815
+ * FAPI section. Add as a new FAPI element. TODO!!!Looking at form.inc and http://backdrop.org/node/169815
  */
 
 /**
@@ -386,7 +385,7 @@ function theme_multiselect($variables) {
   $element['#attributes']['class'][] = "multiselect_sel";
   $element['#attributes']['id'] = $element['#field_name'];
 
-  return $widget['prefix_pre'] . $widget['prefix_options'] . $widget['prefix_post'] . '<div class="form-item form-type-select"><select' . drupal_attributes($element['#attributes']) . '>' . _multiselect_html_for_box_options($widget['selected_options']) . '</select></div>' . "\n</div>\n";
+  return $widget['prefix_pre'] . $widget['prefix_options'] . $widget['prefix_post'] . '<div class="form-item form-type-select"><select' . backdrop_attributes($element['#attributes']) . '>' . _multiselect_html_for_box_options($widget['selected_options']) . '</select></div>' . "\n</div>\n";
 }
 
 /**

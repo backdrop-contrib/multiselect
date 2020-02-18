@@ -16,7 +16,7 @@ function multiselect_settings() {
     '#type' => 'textfield',
     '#title' => t('Width of Select Boxes (in pixels)'),
     '#description' => t('By default, the boxes are each 250px wide.'),
-    '#default_value' => variable_get('multiselect_widths'),
+    '#default_value' => config_get('multiselect.settings', 'multiselect_widths'),
     '#size' => 3,
     '#field_suffix' => 'px',
     '#required' => TRUE
