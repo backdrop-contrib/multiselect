@@ -84,7 +84,6 @@ function _multiselect_fapi_example_options() {
   return  config_get('multiselect_fapi_example.settings','multiselector');
 }
 
-
 function multiselect_fapi_example_display_submit($form, &$form_state) {
   $config = config('multiselect_fapi_example.settings');
   $config->set('multiselector', $form_state['values']['multiselector']);
