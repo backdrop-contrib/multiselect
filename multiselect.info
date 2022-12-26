@@ -3,5 +3,4 @@ name = Multiselect
 description = Defines a multiple selection field widget, to allow easier multi-selection for users.
 package = User Interface
 backdrop = 1.x
-
-
+configure = admin/config/content/multiselect
