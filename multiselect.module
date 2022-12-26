@@ -5,7 +5,6 @@
  * Allows users to select multiple items in an easier way than the normal node-reference widget.
  */
 
-
 /**
  * Implements hook_help().
  */
@@ -22,6 +21,14 @@ function multiselect_help($path, $arg) {
       break;
   }
   return $output;
+}
+
+function multiselect_config_info() {
+  $prefixes['multiselect.settings'] = array(
+    'label' => t('Multiselect settings'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
 }
 
 /**
