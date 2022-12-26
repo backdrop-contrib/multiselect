@@ -5,25 +5,6 @@
  * Allows users to select multiple items in an easier way than the normal node-reference widget.
  */
 
-
-/**
- * Implements hook_help().
- */
-function multiselect_help($path, $arg) {
-  $output = '';
-  switch ($path) {
-    case 'admin/help#multiselect':
-      $output = '<p>' . t('Provides a Form API widget for editing fields that allows users to select from a list of options in a left box and have them visually moved into the right box when options are chosen.') . '</p>';
-      $output .= '<h2>' . t('Methods of Implementing a Multiselect Widget') . '</h2>';
-      $output .= '<h3>' . t('Method 1: Using Fields on any entity') . '</h3>';
-      $output .= '<p>' . t('When creating a new content field, select "Multiselect" as your widget type. You can use Multiselect on fields of type "list", "list_text", "list_number", "node_reference", "taxonomy_term_reference", and "user_reference".') . '</p>';
-      $output .= '<h3>' . t('Method 2: Coding Your Own Module') . '</h3>';
-      $output .= '<p>' . t('If you\'re developing a custom module and wish to use the Multiselect widget in place of a traditional "select" widget, you may use the Backdrop Form API. Included with the module is an example module called "multiselect_fapi_example" that creates a simple form on a page that stores the selected options in the backdrop "variables" table. The page is made available at the path: /multiselect_fapi_example.') . '</p>';
-      break;
-  }
-  return $output;
-}
-
 /**
  * Implements hook_menu().
  */
