@@ -63,7 +63,7 @@ function multiselect_form_alter(&$form, &$form_state, $form_id) {
         $label = $form['instance']['label']['#default_value'];
 
         if (in_array($widget_type, array('multiselect'))) {
-          if (in_array($field_type, array('list', 'list_number', 'list_text', 'taxonomy_term_reference'))) {
+          if (in_array($field_type, array('list_text', 'list_integer', 'list_float', 'taxonomy_term_reference'))) {
             // User_reference and node_reference fields don't need allowed values list.
             // For other field types, if no 'allowed values' were set yet, add a reminder message.
             if (empty($form['field']['settings']['allowed_values']['#field']['settings']['allowed_values'])) {
@@ -82,7 +82,7 @@ function multiselect_field_widget_info() {
   return array(
     'multiselect' => array(
       'label' => t('Multiselect'),
-      'field types' => array('list', 'list_text', 'list_number', 'node_reference', 'taxonomy_term_reference', 'user_reference', 'entityreference'),
+      'field types' => array('list_text', 'list_integer', 'list_number', 'list_float', 'taxonomy_term_reference', 'node_reference', 'user_reference', 'entityreference'),
       'behaviors' => array(
         'multiple values' => FIELD_BEHAVIOR_CUSTOM,
         'default value' => FIELD_BEHAVIOR_CUSTOM,
