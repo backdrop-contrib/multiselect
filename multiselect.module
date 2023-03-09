@@ -82,7 +82,7 @@ function multiselect_field_widget_info() {
   return array(
     'multiselect' => array(
       'label' => t('Multiselect'),
-      'field types' => array('list_text', 'list_integer', 'list_number', 'list_float', 'taxonomy_term_reference', 'user_reference', 'entityreference'),
+      'field types' => array('list_text', 'list_integer', 'list_number', 'list_float', 'taxonomy_term_reference', 'node_reference', 'user_reference', 'entityreference'),
       'behaviors' => array(
         'multiple values' => FIELD_BEHAVIOR_CUSTOM,
         'default value' => FIELD_BEHAVIOR_CUSTOM,
