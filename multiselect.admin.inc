@@ -5,23 +5,24 @@
  * Admin page callbacks.
  */
 
-
 /**
- * Admin settings form
+ * Admin settings form.
  */
 function multiselect_settings() {
   $form = array();
+
+  $form['#config'] = 'multiselect.settings';
   
   $form['multiselect_widths'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Width of Select Boxes (in pixels)'),
+    '#type' => 'number',
+    '#title' => t('Width of multiselect boxes'),
     '#description' => t('By default, the boxes are each 250px wide.'),
     '#default_value' => config_get('multiselect.settings', 'multiselect_widths'),
-    '#size' => 3,
+    '#min' => 10,
+    '#max' => 9999,
     '#field_suffix' => 'px',
     '#required' => TRUE
   );
 
-  $form = system_settings_form($form);
-  return $form;
+  return system_settings_form($form);
 }
