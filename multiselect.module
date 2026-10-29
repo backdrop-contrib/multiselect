@@ -363,7 +363,11 @@ function multiselect_theme() {
  */
 function theme_multiselect($variables) {
   $element = $variables['element'];
-  element_set_attributes($element, array('id', 'name', 'size', 'multiple', 'default_value', 'required'));
+  $attr = array('id', 'name', 'size', 'multiple', 'default_value');
+  if ($element['#required']) {
+    $attr[] = 'required';
+  }
+  element_set_attributes($element, $attr);
   _form_set_class($element, array('form-multiselect'));
   $options = $element['#options']; // All available options as defined by the element
   $items = $element['#default_value']; // All selected options are referred to as "items".
